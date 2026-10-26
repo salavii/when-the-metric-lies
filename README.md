@@ -23,8 +23,8 @@ references/                   the four frozen coverage reference files (v1 to v4
 verify_references.py          recomputes and checks the SHA-256 of the four reference files
 ```
 
-Both scripts use only the Python standard library. They were tested with
-Python 3.13.
+Both scripts use only the Python standard library. They need Python 3.6 or
+newer and were tested with Python 3.13.
 
 ## The rate inversion demo
 
@@ -59,8 +59,10 @@ being scored, so the better agent is charged for the steps it
 survived to take.
 ```
 
-The `cells/step` column is the pooled rate: total cells divided by total
-steps over all episodes.
+The demo prints only the pooled per-step rate: total cells divided by total
+steps over all episodes. Section 8 of the paper also reports the mean of
+per-episode ratios, under which the ranking inverts by more (-43%). The demo
+does not print that figure.
 
 ## The coverage reference files
 
@@ -90,6 +92,46 @@ the same union built from all cells the agents saw (`known`). Each seed entry
 has `cells` (a list of `[x, y]` coordinates), `size` (the number of cells),
 `built_from` and `contributing_agents` (the agent types whose episodes
 contributed).
+
+## Using the reference files
+
+In the project code, per-episode coverage is the number of cells in both `K`
+and `R`, divided by the number of cells in `R`. `K` is the set of cells the
+agent knew on the floor it ended the episode on (for an episode that ends in
+death, its last observed state), and `R` is the `reference` cell set for that
+episode's map seed. Cells in `K` that are not in `R` are not counted and not
+clipped, so coverage never exceeds 1.
+
+This snippet loads one reference file, prints the number of reference cells
+for the first five seeds and the total over all 30, and defines the coverage
+function for a set of known cells:
+
+```python
+import json
+
+with open("references/eval_reference_union_v3_20260819.json", encoding="utf-8") as f:
+    reference = json.load(f)["reference"]
+
+for seed in sorted(reference, key=int)[:5]:
+    print(f"seed {seed}: {len(reference[seed]['cells'])} reference cells")
+print("total:", sum(len(entry["cells"]) for entry in reference.values()))
+
+
+def coverage(known_cells, seed):
+    ref = {tuple(cell) for cell in reference[str(seed)]["cells"]}
+    return len(set(map(tuple, known_cells)) & ref) / len(ref)
+```
+
+Output of the first part, run from the repository root:
+
+```
+seed 1: 1012 reference cells
+seed 2: 1433 reference cells
+seed 3: 630 reference cells
+seed 4: 1034 reference cells
+seed 5: 679 reference cells
+total: 40072
+```
 
 ## Verifying the reference files
 
@@ -121,8 +163,10 @@ All 4 reference files match.
 The script exits with status 0 if all four files match and 1 otherwise.
 
 The hashes are computed over the exact bytes of each file, which use CRLF
-line endings. If a file was checked out with converted line endings, its hash
-will not match. Download the files without line-ending conversion.
+line endings. Cloning this repository with git is safe, because
+`.gitattributes` stops git from converting them. The caveat applies only if
+you copy the files with other tools or editors that change line endings, in
+which case the hashes will not match.
 
 ## License
 
