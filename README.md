@@ -12,7 +12,8 @@ pre-registered protocol, and analyzes how a rate whose denominator depends on
 the agent's own behavior can reverse a ranking of agents.
 
 This folder contains the one simulation from the paper and the four frozen
-coverage reference files whose SHA-256 hashes the paper cites as H1 to H4.
+coverage reference files, v1 to v4, with a script that checks their SHA-256
+hashes.
 These files are extracted from a larger private research project.
 
 ## Contents
@@ -72,12 +73,12 @@ reference file holds that denominator for the 30 evaluation map seeds. For
 each seed it is the union of passable cells observed across confirmed
 evaluation episodes, so it is a lower bound on the reachable floor.
 
-| Version | Paper | File | Built from |
-|---|---|---|---|
-| v1 | H1 | `eval_reference_union.json` | 219 episodes |
-| v2 | H2 | `eval_reference_union_v2_20260818.json` | 384 episodes |
-| v3 | H3 | `eval_reference_union_v3_20260819.json` | 515 episodes |
-| v4 | H4 | `eval_reference_union_v4_20260822.json` | 625 episodes |
+| Version | File | Built from |
+|---|---|---|
+| v1 | `eval_reference_union.json` | 219 episodes |
+| v2 | `eval_reference_union_v2_20260818.json` | 384 episodes |
+| v3 | `eval_reference_union_v3_20260819.json` | 515 episodes |
+| v4 | `eval_reference_union_v4_20260822.json` | 625 episodes |
 
 v3 is the denominator used for the main evaluation campaign. v4 was rebuilt
 after a further 110 episodes and has the same cell set as v3 on all 30 seeds
@@ -144,16 +145,16 @@ python verify_references.py
 Expected output:
 
 ```
-OK       v1 (H1)  eval_reference_union.json
+OK       v1  eval_reference_union.json
          expected 7ca04545ed124960072574751babbfdf6271f961dfb159f39f9733ef207ddf40
          actual   7ca04545ed124960072574751babbfdf6271f961dfb159f39f9733ef207ddf40
-OK       v2 (H2)  eval_reference_union_v2_20260818.json
+OK       v2  eval_reference_union_v2_20260818.json
          expected 1ff27271a429a94ad42c734bf8504ffe1e563497f75ccfc5b29938240182e641
          actual   1ff27271a429a94ad42c734bf8504ffe1e563497f75ccfc5b29938240182e641
-OK       v3 (H3)  eval_reference_union_v3_20260819.json
+OK       v3  eval_reference_union_v3_20260819.json
          expected e7146ced6e8d317e5971da30ad70150d45459203a01a486d069fcd59e362c6a6
          actual   e7146ced6e8d317e5971da30ad70150d45459203a01a486d069fcd59e362c6a6
-OK       v4 (H4)  eval_reference_union_v4_20260822.json
+OK       v4  eval_reference_union_v4_20260822.json
          expected 4b364bfff47a58d81126afe5f5389ea365ab2e8e4085cf9fe5cde37540dc0376
          actual   4b364bfff47a58d81126afe5f5389ea365ab2e8e4085cf9fe5cde37540dc0376
 
