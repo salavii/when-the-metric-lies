@@ -3,7 +3,7 @@
 Artifacts for the paper
 
 > Seyed Ali Alavi, Mohaddeseh Jahanabadi, Dustin Dannenhauer.
-> **When the Metric Lies: Silent Evaluation Failures in RL Exploration.**
+> **[When the Metric Lies: Silent Evaluation Failures in RL Exploration](https://openreview.net/forum?id=xEYm1S49la).**
 > TAE (Trust-AI-Eval) Workshop: Can We Trust AI Evaluation?, NeurIPS 2026.
 
 The paper documents four evaluation failures from one reinforcement-learning
@@ -168,6 +168,18 @@ line endings. Cloning this repository with git is safe, because
 `.gitattributes` stops git from converting them. The caveat applies only if
 you copy the files with other tools or editors that change line endings, in
 which case the hashes will not match.
+
+## Citation
+
+```bibtex
+@inproceedings{alavi2026when,
+  title={When the Metric Lies: Silent Evaluation Failures in {RL} Exploration},
+  author={Seyed Ali Alavi and Mohaddeseh Jahanabadi and Dustin Dannenhauer},
+  booktitle={NeurIPS 2026 Trust-AI-Eval Workshop},
+  year={2026},
+  url={https://openreview.net/forum?id=xEYm1S49la}
+}
+```
 
 ## License
 
